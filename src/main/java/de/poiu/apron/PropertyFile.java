@@ -18,9 +18,10 @@ package de.poiu.apron;
 import de.poiu.apron.entry.BasicEntry;
 import de.poiu.apron.entry.PropertyEntry;
 import de.poiu.apron.entry.Entry;
+import de.poiu.apron.escaping.EscapeUtils;
 import de.poiu.apron.io.PropertyFileReader;
 import de.poiu.apron.io.PropertyFileWriter;
-import de.poiu.apron.escaping.EscapeUtils;
+import de.poiu.apron.java.util.Properties;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,6 +62,9 @@ import java.util.stream.Stream;
  * The map contains the <i>escaped</i> key-value-pairs like a {@link java.util.Properties} object.
  * <p>
  * Be aware that this class is not threadsafe!
+ * <p>
+ * <b>ATTENTION!</b> This class is currently experimental! It is no well tested and may have
+ * strange behaviour.
  *
  * @author mherrn
  */
@@ -124,6 +128,11 @@ public class PropertyFile {
   }
 
 
+  public Properties asProperties() {
+    return new Properties(this);
+  }
+
+
   /**
    * Append a new entry to this PropertyFile.
    * Be aware that this method does not check for duplicate keys. Adding a new entry with the same
@@ -131,7 +140,7 @@ public class PropertyFile {
    *
    * @param entry the new Entry to append
    */
-  void appendEntry(final Entry entry) {
+  public void appendEntry(final Entry entry) {
     Objects.requireNonNull(entry, "entry may not be null");
 
     if (entry instanceof BasicEntry) {
@@ -149,7 +158,7 @@ public class PropertyFile {
    *
    * @param entry the new Entry to append
    */
-  void appendEntry(final BasicEntry entry) {
+  public void appendEntry(final BasicEntry entry) {
     this.entries.add(entry);
   }
 
@@ -161,7 +170,7 @@ public class PropertyFile {
    *
    * @param entry the new Entry to append
    */
-  void appendEntry(final PropertyEntry entry) {
+  public void appendEntry(final PropertyEntry entry) {
     final String key= EscapeUtils.unescape(entry.getKey()).toString();
     //FIXME: What to do if the of this entry already exists?
     //       Throw a DuplicateKeyException?

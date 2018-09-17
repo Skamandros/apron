@@ -117,6 +117,11 @@ public class PropertyEntry implements Entry {
   }
 
 
+  public CharSequence getLeadingWhitespace() {
+    return leadingWhitespace;
+  }
+
+
   /**
    * Returns the <i>escaped</i> key of this PropertyEntry.
    * @return the <i>escaped</i> key of this PropertyEntry
@@ -125,12 +130,23 @@ public class PropertyEntry implements Entry {
     return this.key;
   }
 
+
+  public CharSequence getSeparator() {
+    return separator;
+  }
+
+
   /**
    * Returns the <i>escaped</i> value of this PropertyEntry.
    * @return the <i>escaped</i> value of this PropertyEntry
    */
   public CharSequence getValue() {
     return this.value;
+  }
+
+
+  public CharSequence getLineEnding() {
+    return lineEnding;
   }
 
   /**
